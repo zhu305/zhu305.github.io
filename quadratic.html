@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>一元二次方程计算器</title>
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header container">
+    <nav>
+      <a href="index.html">主页</a>
+      <a href="about.html">关于我 / 简历</a>
+      <a href="quadratic.html">一元二次方程计算器</a>
+    </nav>
+    <h1>一元二次方程客户端小程序</h1>
+  </header>
+
+  <main class="container">
+    <section>
+      <p>输入系数 a、b、c（a ≠ 0），点击“计算”查看两个根（含复数根）。</p>
+      <div class="form-row">
+        <label>a: <input id="a" type="number" step="any" value="1"></label>
+      </div>
+      <div class="form-row">
+        <label>b: <input id="b" type="number" step="any" value="0"></label>
+      </div>
+      <div class="form-row">
+        <label>c: <input id="c" type="number" step="any" value="0"></label>
+      </div>
+      <div class="form-row">
+        <button class="btn" id="calcBtn">计算</button>
+        <button class="btn" id="clearBtn" style="background:#888">清除</button>
+      </div>
+
+      <div id="result" style="margin-top:12px;"></div>
+    </section>
+  </main>
+
+<script>
+function formatNumber(x){
+  return Number.isFinite(x) ? (Math.round(x*10000)/10000) : x;
+}
+function computeRoots(){
+  const a = parseFloat(document.getElementById('a').value);
+  const b = parseFloat(document.getElementById('b').value);
+  const c = parseFloat(document.getElementById('c').value);
+  const out = document.getElementById('result');
+
+  if (isNaN(a) || isNaN(b) || isNaN(c)) {
+    out.innerHTML = '<span style="color:red">请输入合法的数字。</span>';
+    return;
+  }
+  if (a === 0){
+    out.innerHTML = '<span style="color:red">系数 a 不能为 0（否则不是一元二次方程）。</span>';
+    return;
+  }
+
+  const D = b*b - 4*a*c;
+  if (D > 0) {
+    const r1 = (-b + Math.sqrt(D)) / (2*a);
+    const r2 = (-b - Math.sqrt(D)) / (2*a);
+    out.innerHTML = `<p>判别式 D = ${formatNumber(D)}（>0），两个不等实根：</p>
+                     <p>x₁ = ${formatNumber(r1)} ， x₂ = ${formatNumber(r2)}</p>`;
+  } else if (D === 0) {
+    const r = -b/(2*a);
+    out.innerHTML = `<p>判别式 D = 0，双重根：x = ${formatNumber(r)}</p>`;
+  } else {
+    // 复数根
+    const real = -b/(2*a);
+    const imag = Math.sqrt(-D)/(2*a);
+    out.innerHTML = `<p>判别式 D = ${formatNumber(D)}（<0），两个共轭复根：</p>
+                     <p>x₁ = ${formatNumber(real)} + ${formatNumber(imag)}i</p>
+                     <p>x₂ = ${formatNumber(real)} - ${formatNumber(imag)}i</p>`;
+  }
+}
+
+document.getElementById('calcBtn').addEventListener('click', computeRoots);
+document.getElementById('clearBtn').addEventListener('click', ()=>{
+  document.getElementById('a').value = '';
+  document.getElementById('b').value = '';
+  document.getElementById('c').value = '';
+  document.getElementById('result').innerHTML = '';
+});
+</script>
+</body>
+</html>

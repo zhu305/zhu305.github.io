@@ -1,0 +1,26 @@
+body {
+    font-family: "Microsoft YaHei", sans-serif;
+    margin: 40px;
+    background: #f7f7f7;
+}
+
+h1, h2 {
+    color: #0066cc;
+}
+
+nav a {
+    margin-right: 10px;
+    font-weight: bold;
+}
+
+table {
+    width: 50%;
+    background: white;
+}
+
+.resume-img {
+    width: 80%;
+    max-width: 900px;
+    border: 2px solid #ddd;
+    box-shadow: 4px 4px 8px #aaa;
+}
